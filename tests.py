@@ -74,8 +74,7 @@ class TestBooksCollector:
         # устанавливаем книгам жанр
         collector.set_book_genre(book_name, genre)
 
-        assert collector.get_books_with_specific_genre("Фантастика") in [['test_book1'], [
-            'test_book2']], "Несовпадение ожидаемого результата"
+        assert collector.books_genre[book_name] == "Фантастика"
 
     def test_get_books_genre_four_elements(self):
         collector = BooksCollector()
@@ -94,14 +93,15 @@ class TestBooksCollector:
             'Король Лев': 'Мультфильмы',
             'Трое в лодке, не считая собаки': 'Комедии'
         }
-        assert len(collector.get_books_for_children()) == 3
+        assert collector.get_books_for_children() == ['Дюна', 'Король Лев', 'Трое в лодке, не считая собаки'], "Несоответсвие списка фильмов для детей"
 
     @pytest.mark.parametrize('name', [
         "Дюна", "Сияние", "Король лев"])
     def test_add_book_favorites(self, name):
         collector = BooksCollector()
         collector.add_new_book(name)
-        assert collector.add_book_in_favorites(name) == name
+        collector.add_book_in_favorites(name)
+        assert collector.get_list_of_favorites_books() == [name]
 
     @pytest.mark.parametrize("name", ['Дюна', 'Сияние'])
     def test_delete_book_from_favorites(self, name):
