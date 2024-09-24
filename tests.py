@@ -67,14 +67,11 @@ class TestBooksCollector:
     def test_get_books_with_specific_genre_fantastic(self, book_name, genre):
         # создаем экземпляр (объект) класса BooksCollector
         collector = BooksCollector()
-
         # добавляем книги
         collector.add_new_book(book_name)
-
         # устанавливаем книгам жанр
         collector.set_book_genre(book_name, genre)
-
-        assert collector.books_genre[book_name] == "Фантастика"
+        assert collector.get_books_with_specific_genre(genre)[0] == book_name, "Неверный список книг с заданным жанром"
 
     def test_get_books_genre_four_elements(self):
         collector = BooksCollector()
